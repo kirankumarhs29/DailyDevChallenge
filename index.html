@@ -19,14 +19,17 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            align-items: center; /* Center content horizontally */
+            justify-content: flex-start; /* Align content to the top */
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
-            margin: 0 0;
-            padding: 0.5rem;
-            width: 100%;
-            /* Ensure container takes full width on small screens */
+            margin: 0 auto;
+            padding: 1.5rem;
+            width: 100%; /* Ensure container takes full width on small screens */
+            box-sizing: border-box; /* Include padding in the width calculation */
         }
 
         /* Neon accent colors for gradients and highlights */
@@ -319,7 +322,7 @@
                 </div>
             </div>
         </section> -->
-          <div class="scroll-button-container">
+<!--           <div class="scroll-button-container">
         <button id="scrollDownBtn" class="scroll-down-button">
             <span>
                 Scroll Down
@@ -328,7 +331,7 @@
                 </svg>
             </span>
         </button>
-    </div>
+    </div> -->
     </main>
 
     <footer class="bg-gray-900 py-8 text-center text-gray-400">
@@ -376,15 +379,15 @@
     <script>
 
         
-        document.getElementById('scrollDownBtn').addEventListener('click', function() {
-            // Calculate the height of the current viewport
-            const viewportHeight = window.innerHeight;
-            // Scroll down by one viewport height
-            window.scrollBy({
-                top: viewportHeight,
-                behavior: 'smooth' // Smooth scrolling effect
-            });
-        });
+        // document.getElementById('scrollDownBtn').addEventListener('click', function() {
+        //     // Calculate the height of the current viewport
+        //     const viewportHeight = window.innerHeight;
+        //     // Scroll down by one viewport height
+        //     window.scrollBy({
+        //         top: viewportHeight,
+        //         behavior: 'smooth' // Smooth scrolling effect
+        //     });
+        // });
 
         // Countdown Timer
         // Set the launch date (June 4, 2025, at midnight IST - adjust time if needed)

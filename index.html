@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyDevChallenge - Code Better, Build Projects, Boost Your Career</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1a2e;
+            /* Deep blue background */
+            color: #ffffff;
+            /* White text */
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 0;
+            padding: 0.5rem;
+            width: 100%;
+            /* Ensure container takes full width on small screens */
+        }
+
+        /* Neon accent colors for gradients and highlights */
+        .gradient-text {
+            background-image: linear-gradient(to right, #8a2be2, #00ffff);
+            /* Purple to Teal */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.7), 0 0 20px rgba(0, 255, 255, 0.5);
+            /* Purple and Teal glow */
+        }
+
+        .feature-icon {
+            filter: drop-shadow(0 0 5px #8a2be2) drop-shadow(0 0 10px #00ffff);
+            /* Purple and Teal glow for icons */
+        }
+
+        /* Subtle progress bar/streak counter styling */
+        .streak-counter-visual {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            /* Full rounded corners */
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .streak-progress {
+            background-image: linear-gradient(to right, #8a2be2, #00ffff);
+            height: 100%;
+            width: 75%;
+            /* Example progress */
+            border-radius: 9999px;
+        }
+        /* 3D Scroll Button Styling */
+        .scroll-button-container {
+            position: fixed; /* Keep button fixed on screen */
+            bottom: 2rem;
+            left: 85%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .scroll-down-button {
+            background: linear-gradient(145deg, #8a2be2, #00ffff); /* Purple to Teal gradient */
+            color: white;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 9999px; /* Fully rounded */
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+
+            /* 3D Transform Properties */
+            transform-style: preserve-3d;
+            transform: rotateX(10deg) translateZ(0px); /* Initial subtle 3D tilt */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), /* Main shadow */
+                        0 0 15px rgba(138, 43, 226, 0.7), /* Purple glow */
+                        0 0 25px rgba(0, 255, 255, 0.5); /* Teal glow */
+        }
+
+        .scroll-down-button:hover {
+            transform: rotateX(0deg) translateZ(5px) scale(1.05); /* Lift and straighten on hover */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6),
+                        0 0 20px rgba(138, 43, 226, 0.9),
+                        0 0 35px rgba(0, 255, 255, 0.7);
+        }
+
+        .scroll-down-button:active {
+            transform: rotateX(5deg) translateZ(0px) scale(0.98); /* Press down effect */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3),
+                        0 0 10px rgba(138, 43, 226, 0.5),
+                        0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Pseudo-element for the "thickness" of the 3D button */
+        .scroll-down-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #6a1aae, #00b3b3); /* Darker gradient for side */
+            border-radius: inherit;
+            transform: translateZ(-5px); /* Push back to create depth */
+            filter: brightness(0.8); /* Slightly darker to show depth */
+            transition: transform 0.3s ease-in-out;
+            z-index: -1; /* Behind the main button face */
+        }
+
+        .scroll-down-button:hover::before {
+            transform: translateZ(-8px); /* Increase depth on hover */
+        }
+
+        .scroll-down-button span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Arrow icon animation */
+        .scroll-down-button svg {
+            transition: transform 0.3s ease;
+        }
+
+        .scroll-down-button:hover svg {
+            transform: translateY(3px); /* Subtle bounce on hover */
+        }
+         /* Subtle progress bar/streak counter styling */
+        .streak-counter-visual {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px; /* Full rounded corners */
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .streak-progress {
+            background-image: linear-gradient(to right, #8a2be2, #00ffff);
+            height: 100%;
+            width: 75%; /* Example progress */
+            border-radius: 9999px;
+        }
+
+        /* Countdown timer styling */
+        .countdown-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1rem 0.5rem; /* py-4 px-2 */
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+        }
+        .countdown-value {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 800; /* font-extrabold */
+            line-height: 1;
+            display: block;
+            background-image: linear-gradient(to right, #00ffff, #8a2be2); /* Teal to Purple */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .countdown-label {
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            text-transform: uppercase;
+            letter-spacing: 0.05em; /* tracking-wider */
+            color: #b0b0b0;
+            margin-top: 0.25rem;
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <header class="py-4 text-center">
+        <div class="container">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4">
+                <span class="gradient-text">DailyDevChallenge</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white font-medium">
+                Code Consistently. Build Projects. Boost Your Career — On Your Schedule.
+            </p>
+
+        </div>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
+            Choose your own challenge length, stay consistent with daily coding tasks, track your streaks, earn badges,
+            and unlock rewards that keep you motivated every step of the way.
+        </p>
+    </header>
+
+    <main class="flex-grow">
+        <section id="hero" class="md:py-10 text-center">
+            <div class="max-w-2xl mx-auto mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold gradient-text mb-6">Launch in:</h3>
+                    <div id="countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 bg-white bg-opacity-10 p-6 rounded-2xl shadow-lg border border-gray-700 backdrop-blur-sm">
+                        <div class="countdown-item">
+                            <span id="days" class="countdown-value">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span id="hours" class="countdown-value">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span id="minutes" class="countdown-value">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span id="seconds" class="countdown-value">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            <div class="container">
+                <div class="max-w-xl mx-auto bg-white bg-opacity-10 p-6 rounded-xl shadow-lg border border-gray-700 backdrop-blur-sm">
+                    <h2 class="text-2xl font-semibold mb-6 text-white">Get notified when DevStreaks launches and start building your streak.</h2>
+                    <form class="flex flex-col md:flex-row gap-4">
+                        <input type="email" id="user_email" placeholder="Enter your email for early access & updates"
+                            class="flex-grow p-3 rounded-lg border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            aria-label="Email for early access">
+                        <button type="submit"
+                            class="bg-gradient-to-r from-purple-600 to-teal-500 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-teal-600 transition duration-300 ease-in-out neon-glow">
+                            Notify Me
+                        </button>
+                    </form>
+                </div>
+
+                <div class="mt-12 max-w-md mx-auto">
+                    <p class="text-lg font-semibold mb-3 text-gray-300">Your Current Streak: <span
+                            class="gradient-text">75% Complete!</span></p>
+                    <div class="streak-counter-visual">
+                        <div class="streak-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-16 md:py-24 bg-white bg-opacity-5">
+            <div class="container">
+                <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Key Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div
+                        class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg border border-gray-700 backdrop-blur-sm text-center">
+                        <div class="mb-6">
+                            <svg class="w-20 h-20 mx-auto text-purple-400 feature-icon" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Daily Coding Challenges</h3>
+                        <p class="text-gray-300">Engage with fresh, bite-sized coding tasks every day to hone your
+                            skills.</p>
+                    </div>
+
+                    <div
+                        class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg border border-gray-700 backdrop-blur-sm text-center">
+                        <div class="mb-6">
+                            <svg class="w-20 h-20 mx-auto text-teal-400 feature-icon" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Streak Tracking & Rewards</h3>
+                        <p class="text-gray-300">Stay motivated by building streaks and unlocking exclusive badges and
+                            rewards.</p>
+                    </div>
+
+                    <div
+                        class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg border border-gray-700 backdrop-blur-sm text-center">
+                        <div class="mb-6">
+                            <svg class="w-20 h-20 mx-auto text-purple-400 feature-icon" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Pro Version with Exclusive Perks</h3>
+                        <p class="text-gray-300">Access advanced challenges, premium templates, and a private mastermind
+                            group.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section id="testimonials" class="py-16 md:py-24 text-center">
+            <div class="container">
+                <h2 class="text-4xl font-bold mb-12 gradient-text">What Our Users Say</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div
+                        class="bg-white bg-opacity-10 p-6 rounded-xl shadow-lg border border-gray-700 backdrop-blur-sm">
+                        <p class="italic text-gray-200 mb-4">"DevStreaks transformed my coding routine. The daily
+                            challenges are addictive and the rewards keep me going!"</p>
+                        <p class="font-semibold text-white">- Jane Doe, Software Engineer</p>
+                    </div>
+                    <div
+                        class="bg-white bg-opacity-10 p-6 rounded-xl shadow-lg border border-gray-700 backdrop-blur-sm">
+                        <p class="italic text-gray-200 mb-4">"Finally, an app that makes consistency fun! My skills have
+                            improved dramatically since I started my streaks."</p>
+                        <p class="font-semibold text-white">- John Smith, Aspiring Developer</p>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+          <div class="scroll-button-container">
+        <button id="scrollDownBtn" class="scroll-down-button">
+            <span>
+                Scroll Down
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </span>
+        </button>
+    </div>
+    </main>
+
+    <footer class="bg-gray-900 py-8 text-center text-gray-400">
+        <div class="container">
+            <p>&copy; 2025 DevStreaks. All rights reserved.</p>
+            <nav class="mt-4">
+                <ul class="flex justify-center space-x-6">
+                    <li><a href="privacy_policy.html" class="hover:text-white transition duration-200">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition duration-200">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+   <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script>
+    
+    (function(){
+    emailjs.init("0YZ-Q6SJlwwbFdL8J"); // Replace with your EmailJS user ID
+  })();
+ const form = document.querySelector('form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const emailInput = document.getElementById('user_email').value;
+
+    if (!emailInput) {
+      alert("Please enter your email");
+      return;
+    }
+
+    emailjs.send("service_8v94zma", "template_ttypqwa", {
+      user_email: emailInput
+    })
+    .then(() => {
+      alert("Thank you for subscribing!");
+      form.reset();
+    }, (error) => {
+      alert("Oops, something went wrong. Please try again.");
+      console.error(error);
+    });
+  });
+</script>
+    <script>
+
+        
+        document.getElementById('scrollDownBtn').addEventListener('click', function() {
+            // Calculate the height of the current viewport
+            const viewportHeight = window.innerHeight;
+            // Scroll down by one viewport height
+            window.scrollBy({
+                top: viewportHeight,
+                behavior: 'smooth' // Smooth scrolling effect
+            });
+        });
+
+        // Countdown Timer
+        // Set the launch date (June 4, 2025, at midnight IST - adjust time if needed)
+        // Note: Months are 0-indexed in JavaScript (June is 5)
+        const launchDate = new Date('2025-06-04T00:00:00+05:30').getTime(); // IST (UTC+5:30)
+
+        const countdownFunction = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the corresponding elements
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            // If the countdown is over, write some text
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerHTML = "<div class='col-span-full text-center text-3xl font-extrabold gradient-text'>🚀 Launched! Start your streak!</div>";
+            }
+        }, 1000); // Update every 1 second
+    </script>
+</body>
+
+</html>
